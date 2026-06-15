@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talentark | Connecting Talent to Opportunity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2A41;
+    --navy-deep:#0E1A1C;
+    --brass:#5FBF8E;
+    --brass-light:#C8E86E;
+    --cream:#F4F7F2;
+    --slate:#5C6B73;
+    --line: rgba(247,245,240,0.14);
+    --grad: linear-gradient(135deg, var(--brass-light) 0%, var(--brass) 55%, #2E8B82 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--navy-deep);
+    line-height:1.6;
+  }
+  h1,h2,h3,.brand{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* Header */
+  header{
+    position:fixed;top:0;left:0;right:0;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:24px 48px;
+    z-index:100;
+    background:rgba(27,42,65,0.0);
+    transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
+  }
+  header.scrolled{
+    background:var(--navy);
+    padding:14px 48px;
+    box-shadow:0 4px 24px rgba(0,0,0,0.15);
+  }
+  .brand{font-size:1.4rem;color:var(--cream);display:flex;align-items:center;gap:10px;}
+  .brand img{height:36px;width:36px;display:block;}
+  .brand span{color:var(--brass);}
+  nav{display:flex;gap:36px;}
+  nav a{
+    color:var(--cream);
+    font-size:0.92rem;
+    font-weight:500;
+    letter-spacing:0.03em;
+    position:relative;
+    padding-bottom:4px;
+  }
+  nav a::after{
+    content:'';position:absolute;left:0;bottom:0;
+    width:0;height:1px;background:var(--brass);
+    transition:width .25s ease;
+  }
+  nav a:hover::after{width:100%;}
+
+  /* Hero */
+  .hero{
+    min-height:100vh;
+    background:linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%);
+    color:var(--cream);
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    padding:120px 48px 60px;
+  }
+  .hero-inner{
+    max-width:1200px;margin:0 auto;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:60px;
+    align-items:center;
+    width:100%;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    color:var(--brass);
+    font-size:0.85rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:18px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{
+    content:'';width:36px;height:1px;background:var(--brass);
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 5vw, 4.2rem);
+    line-height:1.08;
+    margin-bottom:24px;
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--brass);
+  }
+  .hero p{
+    font-size:1.08rem;
+    color:rgba(247,245,240,0.78);
+    max-width:480px;
+    margin-bottom:36px;
+  }
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 30px;
+    font-size:0.92rem;font-weight:600;
+    border-radius:2px;
+    border:1px solid var(--brass);
+    transition:all .3s ease;
+  }
+  .btn-primary{
+    background:var(--brass);color:var(--navy-deep);
+  }
+  .btn-primary:hover{background:transparent;color:var(--brass);}
+  .btn-ghost{color:var(--cream);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--brass);color:var(--brass);}
+
+  /* Signature: route map */
+  .route-wrap{
+    position:relative;
+    aspect-ratio:1/1;
+    max-width:440px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .logo-glow{
+    position:absolute;
+    width:80%;height:80%;
+    background:radial-gradient(circle, rgba(95,191,142,0.35) 0%, rgba(46,139,130,0.12) 45%, transparent 75%);
+    filter:blur(10px);
+    border-radius:50%;
+    animation:glow 6s ease-in-out infinite;
+  }
+  @keyframes glow{
+    0%,100%{ transform:scale(1); opacity:0.9; }
+    50%{ transform:scale(1.08); opacity:1; }
+  }
+  .hero-logo{
+    position:relative;
+    width:78%;
+    max-width:360px;
+    z-index:2;
+    filter:drop-shadow(0 18px 40px rgba(0,0,0,0.45));
+    animation:float 7s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-10px); }
+  }
+  .route-svg{
+    position:absolute;
+    width:100%;height:100%;
+    z-index:1;
+    opacity:0.5;
+  }
+  .route-line{
+    stroke:var(--brass);
+    stroke-width:1.5;
+    fill:none;
+    stroke-dasharray:6 8;
+    stroke-dashoffset:0;
+    animation:dash 40s linear infinite;
+    opacity:0.5;
+  }
+  @keyframes dash{ to{ stroke-dashoffset:-1000; } }
+  .port{
+    fill:var(--cream);
+    stroke:var(--brass);
+    stroke-width:1.5;
+  }
+  .port-pulse{
+    fill:none;
+    stroke:var(--brass);
+    stroke-width:1;
+    opacity:0;
+  }
+  .port-pulse.p1{ animation: pulse 4s ease-out infinite; }
+  .port-pulse.p2{ animation: pulse 4s ease-out infinite 1.3s; }
+  .port-pulse.p3{ animation: pulse 4s ease-out infinite 2.6s; }
+  @keyframes pulse{
+    0%{ r:6; opacity:0.7; }
+    100%{ r:26; opacity:0; }
+  }
+  .route-label{
+    font-family:'Inter',sans-serif;
+    fill:rgba(247,245,240,0.55);
+    font-size:11px;
+    letter-spacing:0.08em;
+  }
+
+  /* Sections */
+  section{padding:110px 48px;}
+  .section-inner{max-width:1200px;margin:0 auto;}
+  .section-head{
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:40px;
+    margin-bottom:64px;
+    align-items:end;
+  }
+  .section-head .eyebrow{color:var(--slate);}
+  .section-head .eyebrow::before{background:var(--slate);}
+  .section-head h2{
+    font-size:clamp(2rem, 3.4vw, 2.8rem);
+    color:var(--navy-deep);
+    line-height:1.18;
+  }
+  .section-head p{
+    color:var(--slate);
+    font-size:1.02rem;
+    max-width:480px;
+  }
+
+  /* About */
+  .about{background:var(--cream);}
+  .about-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--navy);
+    border:1px solid var(--navy);
+  }
+  .about-card{
+    background:var(--cream);
+    padding:40px 36px;
+  }
+  .about-card .num{
+    font-family:'Fraunces',serif;
+    font-size:2.6rem;
+    color:var(--brass);
+    line-height:1;
+    margin-bottom:18px;
+  }
+  .about-card h3{
+    font-size:1.15rem;
+    margin-bottom:10px;
+    color:var(--navy-deep);
+  }
+  .about-card p{color:var(--slate);font-size:0.95rem;}
+
+  /* Services */
+  .services{background:var(--navy);color:var(--cream);}
+  .services .section-head h2{color:var(--cream);}
+  .services .section-head .eyebrow{color:var(--brass);}
+  .services .section-head .eyebrow::before{background:var(--brass);}
+  .services .section-head p{color:rgba(247,245,240,0.65);}
+  .service-list{
+    display:flex;flex-direction:column;
+  }
+  .service-row{
+    display:grid;
+    grid-template-columns:120px 1fr 1fr;
+    gap:40px;
+    padding:32px 0;
+    border-top:1px solid var(--line);
+    align-items:center;
+    transition:padding-left .3s ease;
+  }
+  .service-row:last-child{border-bottom:1px solid var(--line);}
+  .service-row:hover{padding-left:16px;}
+  .service-row .tag{
+    font-family:'Fraunces',serif;
+    color:var(--brass);
+    font-size:1rem;
+  }
+  .service-row h3{font-size:1.3rem;color:var(--cream);}
+  .service-row p{color:rgba(247,245,240,0.6);font-size:0.95rem;}
+
+  /* Industries */
+  .industries{background:var(--cream);}
+  .pill-grid{display:flex;flex-wrap:wrap;gap:14px;}
+  .pill{
+    border:1px solid var(--navy);
+    padding:12px 24px;
+    font-size:0.92rem;
+    color:var(--navy-deep);
+    border-radius:999px;
+    transition:all .25s ease;
+  }
+  .pill:hover{background:var(--navy);color:var(--cream);}
+
+  /* Contact */
+  .contact{
+    background:var(--navy-deep);
+    color:var(--cream);
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:start;
+  }
+  .contact h2{
+    font-size:clamp(2.2rem,4vw,3.4rem);
+    color:var(--cream);
+    margin-bottom:20px;
+    line-height:1.15;
+  }
+  .contact > .section-inner > p{
+    color:rgba(247,245,240,0.65);
+    max-width:420px;
+    margin-bottom:40px;
+  }
+  .contact-line{
+    display:flex;flex-direction:column;gap:28px;
+  }
+  .contact-item{
+    border-bottom:1px solid var(--line);
+    padding-bottom:18px;
+  }
+  .contact-item .label{
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:8px;
+  }
+  .contact-item a, .contact-item span{
+    font-family:'Fraunces',serif;
+    font-size:1.3rem;
+    color:var(--cream);
+  }
+  .contact-item a:hover{color:var(--brass);}
+
+  form{display:flex;flex-direction:column;gap:18px;}
+  .field{
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .field label{
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brass);
+  }
+  .field input, .field textarea{
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    font-size:1rem;
+    padding:10px 0;
+    outline:none;
+    transition:border-color .25s ease;
+  }
+  .field input:focus, .field textarea:focus{border-color:var(--brass);}
+  .field textarea{resize:vertical;min-height:90px;}
+  .field input::placeholder, .field textarea::placeholder{color:rgba(247,245,240,0.3);}
+  form .btn{align-self:flex-start;margin-top:6px;border:1px solid var(--brass);background:transparent;color:var(--cream);cursor:pointer;font-family:'Inter',sans-serif;}
+  form .btn:hover{background:var(--brass);color:var(--navy-deep);}
+  .form-note{font-size:0.85rem;color:rgba(247,245,240,0.5);margin-top:-6px;}
+
+  /* Footer */
+  footer{
+    background:var(--navy-deep);
+    border-top:1px solid var(--line);
+    padding:32px 48px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:rgba(247,245,240,0.5);
+    font-size:0.85rem;
+  }
+  footer a{color:var(--brass);}
+  footer a:hover{text-decoration:underline;}
+  .footer-brand{display:flex;align-items:center;gap:10px;}
+  .footer-brand img{height:24px;width:24px;}
+
+  @media (max-width: 880px){
+    header{padding:18px 24px;}
+    header.scrolled{padding:12px 24px;}
+    nav{display:none;}
+    .hero{padding:140px 24px 60px;}
+    .hero-inner{grid-template-columns:1fr;gap:50px;}
+    .route-wrap{max-width:340px;}
+    section{padding:70px 24px;}
+    .section-head{grid-template-columns:1fr;gap:24px;}
+    .about-grid{grid-template-columns:1fr;}
+    .service-row{grid-template-columns:1fr;gap:10px;padding:24px 0;}
+    .contact-grid{grid-template-columns:1fr;gap:50px;}
+    footer{flex-direction:column;gap:10px;text-align:center;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .route-line, .port-pulse{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="#top" class="brand"><img src="assets/logo.png" alt="Talentark logo">talent<span>ark</span></a>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#industries">Industries</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Talent Acquisition &amp; HR Solutions</div>
+      <h1>Charting the course<br>from <em>talent</em> to <em>opportunity</em>.</h1>
+      <p>Talentark is a recruitment and human resources consultancy that connects ambitious companies with the people who'll move them forward — and connects skilled professionals with roles worth navigating toward.</p>
+      <div class="btn-row">
+        <a href="#contact" class="btn btn-primary">Start a conversation</a>
+        <a href="https://www.linkedin.com/company/talentark2/" target="_blank" rel="noopener" class="btn btn-ghost">Visit our LinkedIn</a>
+      </div>
+    </div>
+    <div class="route-wrap">
+      <div class="logo-glow"></div>
+      <svg class="route-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+        <path class="route-line" d="M 70 380 C 150 320, 130 200, 230 180 C 330 160, 320 80, 410 70"></path>
+        <circle class="port-pulse p1" cx="70" cy="380" r="6"></circle>
+        <circle class="port-pulse p2" cx="230" cy="180" r="6"></circle>
+        <circle class="port-pulse p3" cx="410" cy="70" r="6"></circle>
+        <circle class="port" cx="70" cy="380" r="6"></circle>
+        <circle class="port" cx="230" cy="180" r="6"></circle>
+        <circle class="port" cx="410" cy="70" r="6"></circle>
+        <text class="route-label" x="40" y="410">TALENT</text>
+        <text class="route-label" x="200" y="210">SCREENING</text>
+        <text class="route-label" x="380" y="55">PLACEMENT</text>
+      </svg>
+      <img src="assets/logo.png" alt="Talentark — talent rising from the ark" class="hero-logo">
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">Who we are</div>
+      <h2>A recruitment partner built around precision, not volume.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="num">01</div>
+        <h3>Sector-focused search</h3>
+        <p>We go deep rather than wide — building shortlists from candidates we've actually vetted, not just sourced.</p>
+      </div>
+      <div class="about-card">
+        <div class="num">02</div>
+        <h3>End-to-end support</h3>
+        <p>From job briefing to onboarding, we stay involved at every step so nothing gets lost in handoffs.</p>
+      </div>
+      <div class="about-card">
+        <div class="num">03</div>
+        <h3>People-first process</h3>
+        <p>Candidates are treated as partners in the process, not just profiles in a pipeline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">What we do</div>
+      <h2>Recruitment services shaped around how teams actually hire.</h2>
+      <p>Whether you're filling one critical seat or scaling a function, we tailor the engagement to the role.</p>
+    </div>
+    <div class="service-list">
+      <div class="service-row">
+        <div class="tag">Permanent</div>
+        <h3>Executive &amp; Permanent Hiring</h3>
+        <p>End-to-end search and selection for full-time roles across leadership and core functions.</p>
+      </div>
+      <div class="service-row">
+        <div class="tag">Contract</div>
+        <h3>Contract &amp; Temporary Staffing</h3>
+        <p>Flexible resourcing for project-based or seasonal needs, without compromising on fit.</p>
+      </div>
+      <div class="service-row">
+        <div class="tag">RPO</div>
+        <h3>Recruitment Process Outsourcing</h3>
+        <p>We embed within your hiring process to manage volume hiring with consistency and speed.</p>
+      </div>
+      <div class="service-row">
+        <div class="tag">Advisory</div>
+        <h3>HR Consulting</h3>
+        <p>Practical guidance on workforce planning, compensation benchmarking, and talent strategy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="industries" id="industries">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="eyebrow">Where we work</div>
+      <h2>Industries we recruit for.</h2>
+    </div>
+    <div class="pill-grid">
+      <span class="pill">Information Technology</span>
+      <span class="pill">BFSI</span>
+      <span class="pill">Manufacturing</span>
+      <span class="pill">Healthcare</span>
+      <span class="pill">Retail &amp; FMCG</span>
+      <span class="pill">Engineering</span>
+      <span class="pill">Logistics &amp; Supply Chain</span>
+      <span class="pill">Professional Services</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <h2>Let's find your<br>next great hire.</h2>
+        <p>Reach out to discuss a role you're hiring for, or a role you're looking for. We respond within one business day.</p>
+        <div class="contact-line">
+          <div class="contact-item">
+            <div class="label">General &amp; Client Enquiries</div>
+            <a href="mailto:Kanchan05@talentark.in">Kanchan05@talentark.in</a>
+          </div>
+          <div class="contact-item">
+            <div class="label">HR &amp; Careers</div>
+            <a href="mailto:hr@talentark.in">hr@talentark.in</a>
+          </div>
+          <div class="contact-item">
+            <div class="label">LinkedIn</div>
+            <a href="https://www.linkedin.com/company/talentark2/" target="_blank" rel="noopener">linkedin.com/company/talentark2</a>
+          </div>
+        </div>
+      </div>
+      <form id="contactForm">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@company.com" required>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us about the role or opportunity..." required></textarea>
+        </div>
+        <p class="form-note">This form opens your email client addressed to our team.</p>
+        <button type="submit" class="btn">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand"><img src="assets/logo.png" alt="Talentark logo"> © <span id="year"></span> Talentark. All rights reserved.</div>
+  <div>Kanchan05@talentark.in · hr@talentark.in · <a href="https://www.linkedin.com/company/talentark2/" target="_blank" rel="noopener">LinkedIn</a></div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const body = encodeURIComponent(`From: ${name} (${email})\n\n${message}`);
+    window.location.href = `mailto:hr@talentark.in?subject=Website Enquiry from ${encodeURIComponent(name)}&body=${body}`;
+  });
+</script>
+
+</body>
+</html>
